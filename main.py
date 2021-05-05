@@ -1,11 +1,11 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-import matplotlib.dates as mdates
 import datetime
 from datetime import datetime as dt
 from datetime import timedelta
 
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import streamlit as st
 
 # st.set_page_config(layout="wide")
@@ -49,7 +49,7 @@ yesterday = dt.now().replace(hour=0, minute=0, second=0, microsecond=0) - timede
 )
 st.write(f"Data for yesterday: {yesterday.strftime('%Y-%m-%d')}")
 col1, col2 = st.beta_columns(2)
-col1.text("Vaccinated yesterday")
+col1.text("accinated yesterday")
 col1.markdown(
     f'**{df_vacc[(df_vacc["datum"] == yesterday)]["im_impfzentrum_verabreichte_impfungen_pro_tag"].values[0]}**'
 )
@@ -60,7 +60,7 @@ col2.markdown(
 
 
 df_last_week = df_vacc.iloc[:8, :]
-st.subheader("Vaccination delivered last 8 days")
+st.subheader("Vaccinated/day for last 8 days")
 fig, ax = vaccination_lc(
     df_last_week["datum"], df_last_week["im_impfzentrum_verabreichte_impfungen_pro_tag"]
 )
@@ -68,12 +68,12 @@ day_fmt = mdates.DateFormatter('%A')
 ax.xaxis.set_major_formatter(day_fmt)
 st.write(fig)
 
-st.subheader("Vaccination delivered from start")
+st.subheader("Vaccinated/day since start")
 fig, ax = vaccination_lc(
     df_vacc["datum"], df_vacc["im_impfzentrum_verabreichte_impfungen_pro_tag"]
 )
 st.pyplot(fig)
 
 
-source_link = "Data source is from [Open Data Basel](https://data.bs.ch/) and created by [Joshy](https://www.linkedin.com/in/joshy-cyriac-4089482/)"
+source_link = "Data source is [Open Data Basel](https://data.bs.ch/) and created by [Joshy](https://www.linkedin.com/in/joshy-cyriac-4089482/)"
 st.markdown(source_link, unsafe_allow_html=True)
