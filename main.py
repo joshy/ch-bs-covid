@@ -25,10 +25,10 @@ def vaccination_lc(x, y):
     )
     ax.yaxis.grid(alpha=0.3, linestyle="--")
     ax.set_facecolor("#f9f9f9")
-    return fig
+    return fig, ax
 
 
-st.header("Switzerland - Basel - Covid data")
+st.header("Covid & Vaccination stats for Basel, Switzerland")
 df_vacc = pd.read_csv(
     "https://data.bs.ch/api/v2/catalog/datasets/100111/exports/csv?limit=-1&timezone=UTC&delimiter=%3B&order_by=datum%20desc",
     sep=";",
@@ -59,15 +59,21 @@ col2.markdown(
 )
 
 
-df_last_week = df_vacc.iloc[:7, :]
-st.subheader("Vaccination delivered last 7 days")
-fig = vaccination_lc(
+df_last_week = df_vacc.iloc[:8, :]
+st.subheader("Vaccination delivered last 8 days")
+fig, ax = vaccination_lc(
     df_last_week["datum"], df_last_week["im_impfzentrum_verabreichte_impfungen_pro_tag"]
 )
+day_fmt = mdates.DateFormatter('%A')
+ax.xaxis.set_major_formatter(day_fmt)
 st.write(fig)
 
 st.subheader("Vaccination delivered from start")
-fig = vaccination_lc(
+fig, ax = vaccination_lc(
     df_vacc["datum"], df_vacc["im_impfzentrum_verabreichte_impfungen_pro_tag"]
 )
 st.pyplot(fig)
+
+
+source_link = "Data source is from [Open Data Basel](https://data.bs.ch/) and created by [Joshy](https://www.linkedin.com/in/joshy-cyriac-4089482/)"
+st.markdown(source_link, unsafe_allow_html=True)
