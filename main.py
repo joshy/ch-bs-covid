@@ -8,7 +8,10 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-# st.set_page_config(layout="wide")
+
+def display(value):
+    f = format(value, "_")
+    return f.replace("_", "'")
 
 
 def vaccination_lc(x, y):
@@ -48,13 +51,17 @@ yesterday = dt.now().replace(hour=0, minute=0, second=0, microsecond=0) - timede
     days=1
 )
 st.write(f"Data for yesterday: {yesterday.strftime('%Y-%m-%d')}")
-col1, col2 = st.beta_columns(2)
-col1.text("accinated yesterday")
+print(df_vacc.columns)
+col1, col2, col3 = st.beta_columns(3)
+col1.text("Vaccinated yesterday")
 col1.markdown(
-    f'**{df_vacc[(df_vacc["datum"] == yesterday)]["im_impfzentrum_verabreichte_impfungen_pro_tag"].values[0]}**'
+    f'**{display(df_vacc[(df_vacc["datum"] == yesterday)]["im_impfzentrum_verabreichte_impfungen_pro_tag"].values[0])}**'
 )
-col2.text("New confirmed COVID cases Basel-Stadt")
-col2.markdown(
+col2.text("Fully vaccinated")
+col2.markdown(f'**{display(df_vacc[(df_vacc["datum"] == yesterday)]["total_personen_mit_zweiter_dosis"].values[0])}**')
+
+col3.text("New confirmed cases")
+col3.markdown(
     f'**{df_cases[(df_cases["date"] == yesterday)]["ndiff_conf"].values[0]}**'
 )
 
