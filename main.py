@@ -50,20 +50,25 @@ df_cases = pd.read_csv(
 yesterday = dt.now().replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(
     days=1
 )
-st.write(f"Data for yesterday: {yesterday.strftime('%Y-%m-%d')}")
+st.markdown(f"Data for yesterday: **{yesterday.strftime('%Y-%m-%d')}**")
 print(df_vacc.columns)
-col1, col2, col3 = st.beta_columns(3)
-col1.text("Vaccinated yesterday")
+col1, col2, col3, col4 = st.beta_columns(4)
+col1.text("New confirmed cases")
 col1.markdown(
-    f'**{display(df_vacc[(df_vacc["datum"] == yesterday)]["im_impfzentrum_verabreichte_impfungen_pro_tag"].values[0])}**'
-)
-col2.text("Fully vaccinated")
-col2.markdown(f'**{display(df_vacc[(df_vacc["datum"] == yesterday)]["total_personen_mit_zweiter_dosis"].values[0])}**')
-
-col3.text("New confirmed cases")
-col3.markdown(
     f'**{df_cases[(df_cases["date"] == yesterday)]["ndiff_conf"].values[0]}**'
 )
+
+col2.text("Vaccinated")
+col2.markdown(
+    f'**{display(df_vacc[(df_vacc["datum"] == yesterday)]["total_verabreichte_impfungen_pro_tag"].values[0])}**'
+)
+
+col3.text("Full vaccinated")
+fully_vacc = df_vacc[(df_vacc["datum"] == yesterday)]["total_personen_mit_zweiter_dosis"].values[0]
+col3.markdown(f'**{display(fully_vacc)}**')
+
+col4.text("% of population")
+col4.markdown(f"** {fully_vacc*100/201909:.2f}% ** (of 201'909)")
 
 
 df_last_week = df_vacc.iloc[:8, :]
@@ -82,5 +87,5 @@ fig, ax = vaccination_lc(
 st.pyplot(fig)
 
 
-source_link = "Data source is [Open Data Basel](https://data.bs.ch/) and created by [Joshy](https://www.linkedin.com/in/joshy-cyriac-4089482/)"
+source_link = "Source: [Open Data Basel](https://data.bs.ch/), created by [Joshy](https://www.linkedin.com/in/joshy-cyriac-4089482/)"
 st.markdown(source_link, unsafe_allow_html=True)
