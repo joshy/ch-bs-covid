@@ -68,7 +68,7 @@ fully_vacc = df_vacc[(df_vacc["datum"] == yesterday)]["total_personen_mit_zweite
 col3.markdown(f'**{display(fully_vacc)}**')
 
 col4.text("% of population")
-col4.markdown(f"** {fully_vacc*100/201909:.2f}% ** (of 201'909)")
+col4.markdown(f"** {fully_vacc*100/201909:.1f}% ** (of 201'909)")
 
 
 df_last_week = df_vacc.iloc[:8, :]
