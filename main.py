@@ -51,7 +51,6 @@ yesterday = dt.now().replace(hour=0, minute=0, second=0, microsecond=0) - timede
     days=1
 )
 st.markdown(f"Data for yesterday: **{yesterday.strftime('%Y-%m-%d')}**")
-print(df_vacc.columns)
 col1, col2, col3, col4 = st.beta_columns(4)
 col1.text("New confirmed cases")
 col1.markdown(
