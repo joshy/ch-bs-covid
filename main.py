@@ -73,7 +73,7 @@ col4.markdown(f"** {fully_vacc*100/201909:.1f}% ** (of 201'909)")
 df_last_week = df_vacc.iloc[:8, :]
 st.subheader("Vaccinated/day for last 8 days")
 fig, ax = vaccination_lc(
-    df_last_week["datum"], df_last_week["im_impfzentrum_verabreichte_impfungen_pro_tag"]
+    df_last_week["datum"], df_last_week["total_verabreichte_impfungen_pro_tag"]
 )
 day_fmt = mdates.DateFormatter('%A')
 ax.xaxis.set_major_formatter(day_fmt)
@@ -81,7 +81,7 @@ st.write(fig)
 
 st.subheader("Vaccinated/day since start")
 fig, ax = vaccination_lc(
-    df_vacc["datum"], df_vacc["im_impfzentrum_verabreichte_impfungen_pro_tag"]
+    df_vacc["datum"], df_vacc["total_verabreichte_impfungen_pro_tag"]
 )
 st.pyplot(fig)
 
