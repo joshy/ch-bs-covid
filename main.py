@@ -1,4 +1,3 @@
-import datetime
 from datetime import datetime as dt
 from datetime import timedelta
 
@@ -36,10 +35,9 @@ def vaccination_lc(x, y):
     ax.spines["top"].set_visible(False)
     ax.spines["left"].set_visible(False)
     ax.spines["bottom"].set_visible(False)
-    ax.step(
+    ax.bar(
         x,
         y,
-        where="mid",
         color="#024b7a",
     )
     ax.yaxis.grid(alpha=0.3, linestyle="--")
@@ -67,7 +65,7 @@ yesterday = dt.now().replace(hour=0, minute=0, second=0, microsecond=0) - timede
     days=1
 )
 st.markdown(f"Data for yesterday: **{yesterday.strftime('%Y-%m-%d')}**")
-col1, col2, col3, col4 = st.beta_columns(4)
+col1, col2, col3, col4 = st.columns(4)
 col1.text("New confirmed cases")
 col1.markdown(
     f'**{int(df_cases[(df_cases["date"] == yesterday)]["ndiff_conf"].values[0])}**'
